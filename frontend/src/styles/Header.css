@@ -1,0 +1,292 @@
+/* ─── Header ──────────────────────────────────────────────────────────────── */
+.header {
+  height: var(--header-h);
+  background: var(--header-bg);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 24px;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+/* Brand */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-logo-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: 6px;
+  flex-shrink: 0;
+  margin: -4px 0;
+}
+
+.header-logo-text {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--header-fg);
+  letter-spacing: -.01em;
+}
+
+.header-logo-text strong {
+  font-weight: 700;
+}
+
+.header-divider {
+  width: 1px;
+  height: 18px;
+  background: rgba(255,255,255,.15);
+}
+
+.header-subtitle {
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(255,255,255,.4);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+/* Patient chips */
+.header-patient {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.header-info-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 6px;
+  padding: 4px 10px;
+}
+
+.chip-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255,255,255,.4);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.chip-value {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--header-fg);
+}
+
+.modality-badge.modality-active {
+  background: var(--accent);
+  color: #fff;
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .05em;
+}
+
+/* Patient picker */
+.header-patient-picker {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.picker-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 7px;
+  color: var(--header-fg);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+  white-space: nowrap;
+}
+
+.picker-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,.14);
+  border-color: rgba(255,255,255,.22);
+}
+
+.picker-btn--open {
+  background: rgba(255,255,255,.14);
+  border-color: var(--accent);
+}
+
+.picker-chevron {
+  transition: transform .2s;
+  opacity: .6;
+}
+.picker-chevron--open { transform: rotate(180deg); }
+
+.picker-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 240px;
+  background: #1e293b;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 9px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  overflow: hidden;
+  z-index: 999;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.picker-patient {
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.picker-patient:last-child { border-bottom: none; }
+
+/* Patient header row */
+.picker-patient-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 12px;
+  background: none;
+  border: none;
+  color: var(--header-fg);
+  font-size: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: background .1s;
+}
+.picker-patient-row:hover { background: rgba(255,255,255,.06); }
+.picker-patient-row--active { background: rgba(50,205,50,.15) !important; }
+
+.picker-patient-chevron {
+  display: flex;
+  align-items: center;
+  color: rgba(255,255,255,.4);
+  flex-shrink: 0;
+}
+
+.picker-patient-id {
+  font-weight: 700;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.picker-patient-name {
+  font-size: 11px;
+  color: rgba(255,255,255,.5);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.picker-patient-meta {
+  font-size: 10px;
+  color: rgba(255,255,255,.3);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.picker-patient-count {
+  font-size: 10px;
+  color: rgba(255,255,255,.35);
+  background: rgba(255,255,255,.08);
+  border-radius: 10px;
+  padding: 1px 7px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* Studies sub-list */
+.picker-studies {
+  border-top: 1px solid rgba(255,255,255,.05);
+  background: rgba(0,0,0,.15);
+}
+
+.picker-study-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px 7px 28px;
+  background: none;
+  border: none;
+  border-top: 1px solid rgba(255,255,255,.04);
+  color: var(--header-fg);
+  font-size: 11px;
+  cursor: pointer;
+  text-align: left;
+  transition: background .1s;
+}
+.picker-study-row:first-child { border-top: none; }
+.picker-study-row:hover { background: rgba(255,255,255,.06); }
+.picker-study-row--active { background: rgba(50,205,50,.25) !important; }
+
+.picker-study-label {
+  font-weight: 600;
+  color: var(--accent);
+  flex-shrink: 0;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.picker-study-id {
+  color: rgba(255,255,255,.55);
+  font-size: 11px;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.picker-check {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* Right side */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-date {
+  font-size: 11px;
+  color: rgba(255,255,255,.4);
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--green);
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: .5; transform: scale(1.3); }
+}

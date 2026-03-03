@@ -1,0 +1,305 @@
+/* ─── Multi-viewer shell ────────────────────────────────────────────────────── */
+.multi-viewer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #080c14;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+/* ─── Toolbar ───────────────────────────────────────────────────────────────── */
+.mv-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  background: #0d1321;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  flex-shrink: 0;
+}
+
+.mv-title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  margin-right: 6px;
+  white-space: nowrap;
+}
+
+.mv-tools {
+  display: flex;
+  gap: 4px;
+}
+
+.mv-tool-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,.5);
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+  cursor: pointer;
+  transition: all .15s;
+}
+
+.mv-tool-btn:hover {
+  background: rgba(255,255,255,.10);
+  color: rgba(255,255,255,.9);
+}
+
+.mv-tool-active {
+  background: var(--accent, #3b82f6);
+  color: #fff;
+  border-color: var(--accent, #3b82f6);
+}
+
+.mv-hint {
+  margin-left: auto;
+  font-size: 10px;
+  color: rgba(255,255,255,.2);
+  white-space: nowrap;
+}
+
+/* ─── 3-column viewport grid ────────────────────────────────────────────────── */
+.mv-grid {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  min-height: 0;       /* critical: allow flex children to shrink below content */
+  overflow: hidden;
+}
+
+/* ─── Single pane ───────────────────────────────────────────────────────────── */
+.mv-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 6px;
+  overflow: hidden;
+  background: #0a0d18;
+}
+
+/* Pane label strip */
+.mv-pane-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  border-bottom: 2px solid transparent; /* colour set inline per pane */
+  flex-shrink: 0;
+  background: rgba(0,0,0,.3);
+}
+
+.mv-pane-title {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.mv-pane-count {
+  font-size: 10px;
+  color: rgba(255,255,255,.35);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Cornerstone rendering area */
+.mv-pane-body {
+  flex: 1;
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Cornerstone attaches its canvas/SVG layers inside this div */
+.mv-cs-viewport {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Seg contour overlay canvas */
+.mv-seg-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Show Seg button */
+.mv-seg-btn {
+  background: rgba(220, 38, 38, .15) !important;
+  border-color: rgba(220, 38, 38, .35) !important;
+  color: #fca5a5 !important;
+}
+
+.mv-seg-btn:hover:not(:disabled) {
+  background: rgba(220, 38, 38, .28) !important;
+  color: #fff !important;
+}
+
+.mv-seg-active {
+  background: #dc2626 !important;
+  border-color: #dc2626 !important;
+  color: #fff !important;
+}
+
+.mv-seg-active:hover:not(:disabled) {
+  background: #b91c1c !important;
+}
+
+/* PNG mask toggle button */
+.mv-mask-btn {
+  background: rgba(139, 92, 246, .15) !important;
+  border-color: rgba(139, 92, 246, .35) !important;
+  color: #c4b5fd !important;
+}
+
+.mv-mask-btn:hover:not(:disabled) {
+  background: rgba(139, 92, 246, .28) !important;
+  color: #fff !important;
+}
+
+.mv-mask-active {
+  background: #7c3aed !important;
+  border-color: #7c3aed !important;
+  color: #fff !important;
+}
+
+.mv-mask-active:hover:not(:disabled) {
+  background: #6d28d9 !important;
+}
+
+/* Lesion jump buttons */
+.mv-lesion-btn {
+  background: rgba(245, 158, 11, .12) !important;
+  border-color: rgba(245, 158, 11, .3) !important;
+  color: #fcd34d !important;
+  font-weight: 700 !important;
+  font-size: 10px !important;
+  padding: 4px 7px !important;
+  min-width: 28px;
+}
+
+.mv-lesion-btn:hover:not(:disabled) {
+  background: rgba(245, 158, 11, .25) !important;
+  color: #fff !important;
+}
+
+@keyframes mv-seg-spin { to { transform: rotate(360deg); } }
+
+.mv-seg-spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: mv-seg-spin .7s linear infinite;
+}
+
+/* Loading spinner overlay */
+.mv-overlay-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 12, 20, .7);
+  z-index: 10;
+}
+
+.mv-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(255,255,255,.15);
+  border-top-color: rgba(255,255,255,.7);
+  border-radius: 50%;
+  animation: mv-spin .7s linear infinite;
+}
+
+@keyframes mv-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Slice navigation bar ──────────────────────────────────────────────────── */
+.mv-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  background: rgba(0,0,0,.25);
+  border-top: 1px solid rgba(255,255,255,.06);
+  flex-shrink: 0;
+}
+
+.mv-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  color: rgba(255,255,255,.6);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background .12s;
+}
+
+.mv-nav-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,.14);
+  color: #fff;
+}
+
+.mv-nav-btn:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.mv-slider {
+  flex: 1;
+  height: 3px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255,255,255,.15);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.mv-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.7);
+  cursor: pointer;
+}
+
+/* ─── Error banner ──────────────────────────────────────────────────────────── */
+.mv-error {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(220, 38, 38, .85);
+  color: #fff;
+  font-size: 12px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+}

@@ -1,0 +1,21 @@
+.env
+.vscode/
+
+# macOS
+.DS_Store
+
+# Python
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.egg-info/
+
+# Data
+data/*
+
+# Frontend build output
+frontend/dist/
+
+# Node modules
+frontend/node_modules/
+node_modules/
